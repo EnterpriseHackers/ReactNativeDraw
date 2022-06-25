@@ -446,18 +446,34 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(
       },
     });
 
+    // const backgroundCanvas = [
+    //   require('../../../example/src/assets/blackCanvas.jpeg'),
+    //   require('../../../example/src/assets/blueRockCanvas.jpeg'),
+    //   require('../../../example/src/assets/brownCanvas.jpeg'),
+    //   require('../../../example/src/assets/burlapCanvas.jpeg'),
+    //   require('../../../example/src/assets/coloredGlassCanvas.jpeg'),
+    //   require('../../../example/src/assets/concreteCanvas.jpeg'),
+    //   require('../../../example/src/assets/croatiaCanvas.jpeg'),
+    //   require('../../../example/src/assets/orangeRedPinkCanvas.jpeg'),
+    //   require('../../../example/src/assets/paintCanvas.jpeg'),
+    //   require('../../../example/src/assets/paintedCanvas.jpeg'),
+    //   require('../../../example/src/assets/scratchedConcreteCanvas.jpeg'),
+    //   require('../../../example/src/assets/slateCanvas.jpeg'),
+    //   require('../../../example/src/assets/slateStyleCanvas.jpeg'),
+    //   require('../../../example/src/assets/whiteCanvas.jpeg'),
+    // ];
+    //
+    // const randomBackground =
+    //   backgroundCanvas[Math.floor(Math.random() * backgroundCanvas.length)];
+
     return (
       <GestureHandlerRootView style={canvasContainerStyles}>
         <Animated.View>
           <GestureDetector gesture={panGesture}>
             <View>
               <ImageBackground
-                // source={require('example/src/assets/img.png')}
-                source={{ uri: 'https://picsum.photos/200/300' }}
-                // source={{ uri: 'https://loremflickr.com/640/360'}
-                // }
-                // source={videoPath}
                 style={s.backgroundImage}
+                source={require('../../../example/src/assets/whiteCanvas.jpeg')}
               >
                 <View />
               </ImageBackground>
