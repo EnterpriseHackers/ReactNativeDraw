@@ -88,5 +88,6 @@ export const DEFAULT_THICKNESS_STEP = 1;
 export const DEFAULT_SLIDER_COLOR = '#1515cc';
 export const DEFAULT_DELETE_BUTTON_COLOR = '#81090A';
 export const DEFAULT_SAVE_BUTTON_COLOR = 'rgba(0,255,13,0.86)';
+export const DEFAULT_LOAD_BUTTON_COLOR = '#0c40bf';
 export const DEFAULT_OTHER_BUTTONS_COLOR = '#DDD';
 export const SLIDERS_HEIGHT = 80;

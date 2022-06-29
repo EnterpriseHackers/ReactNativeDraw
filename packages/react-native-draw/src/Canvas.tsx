@@ -1,10 +1,33 @@
-import React, {forwardRef, useEffect, useImperativeHandle, useState,} from 'react';
-import {Animated, Dimensions, ImageBackground, StyleProp, StyleSheet, View, ViewStyle,} from 'react-native';
-import {Gesture, GestureDetector, GestureHandlerRootView,} from 'react-native-gesture-handler';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
+import {
+  Animated,
+  Dimensions,
+  ImageBackground,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
 
-import {DEFAULT_BRUSH_COLOR, DEFAULT_ERASER_SIZE, DEFAULT_OPACITY, DEFAULT_THICKNESS, DEFAULT_TOOL,} from './constants';
-import {DrawingTool, PathDataType, PathType} from './types';
-import {createSVGPath} from './utils';
+import {
+  DEFAULT_BRUSH_COLOR,
+  DEFAULT_ERASER_SIZE,
+  DEFAULT_OPACITY,
+  DEFAULT_THICKNESS,
+  DEFAULT_TOOL,
+} from './constants';
+import { DrawingTool, PathDataType, PathType } from './types';
+import { createSVGPath } from './utils';
 import SVGRenderer from './renderer/SVGRenderer';
 import RendererHelper from './renderer/RendererHelper';
 
