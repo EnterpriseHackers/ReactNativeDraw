@@ -30,6 +30,7 @@ import { DrawingTool, PathDataType, PathType } from './types';
 import { createSVGPath } from './utils';
 import SVGRenderer from './renderer/SVGRenderer';
 import RendererHelper from './renderer/RendererHelper';
+
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export interface CanvasProps {
@@ -300,7 +301,7 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(
       setPaths([]);
       setPath([]);
     };
-    const getPaths = () => paths;
+    const getPaths = (prev: any) => paths;
 
     const addPath = (newPath: PathType) =>
       setPaths((prev) => [...prev, newPath]);
@@ -312,7 +313,15 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(
         strokeWidth: number,
         strokeOpacity: number
       ) =>
-        `<path d="${d}" stroke="${stroke}" stroke-width="${strokeWidth}" opacity="${strokeOpacity}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+        `<path
+             d="${d}"
+             stroke="${stroke}"
+             stroke-width="${strokeWidth}"
+             opacity="${strokeOpacity}"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             fill="none"
+        />`;
 
       const separatePaths = (p: PathType) =>
         p.path!.reduce(
@@ -447,6 +456,53 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(
           setPath([]);
         }
       })
+      // .onFinalize(() => {
+      //   if (tool === DrawingTool.Brush) {
+      //     setPaths((prev) => {
+      //       const newSVGPath = generateSVGPath(path, simplifyOptions);
+      //
+      //       if (prev.length === 0) {
+      //         return [
+      //           {
+      //             color,
+      //             path: [newSVGPath],
+      //             data: [path],
+      //             thickness,
+      //             opacity,
+      //             combine: combineWithLatestPath,
+      //           },
+      //         ];
+      //       }
+      //
+      //       const lastPath = prev[prev.length - 1];
+      //
+      //       // Check if the last path has the same properties
+      //       if (
+      //         lastPath.color === color &&
+      //         lastPath.thickness === thickness &&
+      //         lastPath.opacity === opacity
+      //       ) {
+      //         lastPath.path = [...lastPath.path!, newSVGPath];
+      //         lastPath.data = [...lastPath.data, path];
+      //
+      //         return [...prev.slice(0, -1), lastPath];
+      //       }
+      //
+      //       return [
+      //         ...prev,
+      //         {
+      //           color,
+      //           path: [newSVGPath],
+      //           data: [path],
+      //           thickness,
+      //           opacity,
+      //           combine: combineWithLatestPath,
+      //         },
+      //       ];
+      //     });
+      //     setPath([]);
+      //   }
+      // })
       .minPointers(1)
       .minDistance(0)
       .averageTouches(false)
@@ -468,18 +524,34 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(
       },
     });
 
+    // const backgroundCanvas = [
+    //   require('../../../example/src/assets/blackCanvas.jpeg'),
+    //   require('../../../example/src/assets/blueRockCanvas.jpeg'),
+    //   require('../../../example/src/assets/brownCanvas.jpeg'),
+    //   require('../../../example/src/assets/burlapCanvas.jpeg'),
+    //   require('../../../example/src/assets/coloredGlassCanvas.jpeg'),
+    //   require('../../../example/src/assets/concreteCanvas.jpeg'),
+    //   require('../../../example/src/assets/croatiaCanvas.jpeg'),
+    //   require('../../../example/src/assets/orangeRedPinkCanvas.jpeg'),
+    //   require('../../../example/src/assets/paintCanvas.jpeg'),
+    //   require('../../../example/src/assets/paintedCanvas.jpeg'),
+    //   require('../../../example/src/assets/scratchedConcreteCanvas.jpeg'),
+    //   require('../../../example/src/assets/slateCanvas.jpeg'),
+    //   require('../../../example/src/assets/slateStyleCanvas.jpeg'),
+    //   require('../../../example/src/assets/whiteCanvas.jpeg'),
+    // ];
+    //
+    // const randomBackground =
+    //   backgroundCanvas[Math.floor(Math.random() * backgroundCanvas.length)];
+
     return (
       <GestureHandlerRootView style={canvasContainerStyles}>
         <Animated.View>
           <GestureDetector gesture={panGesture}>
             <View>
               <ImageBackground
-                // source={require('example/src/assets/img.png')}
-                source={{ uri: 'https://picsum.photos/200/300' }}
-                // source={{ uri: 'https://loremflickr.com/640/360'}
-                // }
-                // source={videoPath}
                 style={s.backgroundImage}
+                source={require('../../../example/src/assets/whiteCanvas.jpeg')}
               >
                 <View />
               </ImageBackground>

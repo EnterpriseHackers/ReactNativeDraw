@@ -7,11 +7,12 @@ import {
   DEFAULT_SAVE_BUTTON_COLOR,
   DEFAULT_OTHER_BUTTONS_COLOR,
   DEFAULT_TOOL,
+  DEFAULT_LOAD_BUTTON_COLOR,
 } from './constants';
 import { DrawingTool } from './types';
 import BrushPreview, { BrushPreviewProps } from './BrushPreview';
 import Button from './Button';
-import { Brush, Delete, Eraser, Palette, Undo, Save } from './icons';
+import { Brush, Delete, Eraser, Palette, Undo, Save, Load } from './icons';
 
 export interface CanvasControlsProps extends BrushPreviewProps {
   /**
@@ -27,6 +28,11 @@ export interface CanvasControlsProps extends BrushPreviewProps {
   //todo: make save function
   //
   onSave?: () => void;
+
+  /**
+   * Callback to load the saved image
+   */
+  onLoad?: () => void;
   /**
    * Callback when the eraser button is pressed
    */
@@ -55,6 +61,8 @@ export interface CanvasControlsProps extends BrushPreviewProps {
   deleteButtonColor?: string;
 
   saveButtonColor?: string;
+
+  loadButtonColor?: string;
   /**
    * Other buttons color (undo and eraser mode toggle)
    * @default DEFAULT_OTHER_BUTTONS_COLOR
@@ -72,12 +80,14 @@ const CanvasControls: React.FC<CanvasControlsProps> = ({
   onClear,
   onUndo,
   onSave,
+  onLoad,
   onToggleEraser,
   onToggleBrushProperties,
   buttonStyle,
   tool = DEFAULT_TOOL,
   deleteButtonColor = DEFAULT_DELETE_BUTTON_COLOR,
   saveButtonColor = DEFAULT_SAVE_BUTTON_COLOR,
+  loadButtonColor = DEFAULT_LOAD_BUTTON_COLOR,
   otherButtonsColor = DEFAULT_OTHER_BUTTONS_COLOR,
   color,
   thickness,
@@ -127,18 +137,31 @@ const CanvasControls: React.FC<CanvasControlsProps> = ({
       />
 
       <View style={styles.buttonsContainer}>
+        {onLoad && (
+          <View style={onClear && styles.endButton}>
+            <Button
+              color={loadButtonColor}
+              style={buttonStyle}
+              onPress={onLoad}
+            >
+              <Load />
+            </Button>
+          </View>
+        )}
         {onToggleEraser && (
-          <Button
-            onPress={onToggleEraser}
-            color={otherButtonsColor}
-            style={buttonStyle}
-          >
-            {tool === DrawingTool.Brush ? (
-              <Brush fill={otherButtonsColor} height={30} width={30} />
-            ) : (
-              <Eraser fill={otherButtonsColor} height={30} width={30} />
-            )}
-          </Button>
+          <View style={onClear && styles.endButton}>
+            <Button
+              onPress={onToggleEraser}
+              color={otherButtonsColor}
+              style={buttonStyle}
+            >
+              {tool === DrawingTool.Brush ? (
+                <Brush fill={otherButtonsColor} height={30} width={30} />
+              ) : (
+                <Eraser fill={otherButtonsColor} height={30} width={30} />
+              )}
+            </Button>
+          </View>
         )}
         {onToggleBrushProperties && color && (
           <View style={onToggleEraser && styles.endButton}>
@@ -166,14 +189,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    marginHorizontal: 15,
+    marginHorizontal: 10,
   },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   endButton: {
-    marginLeft: 10,
+    marginLeft: 1,
   },
 });
 

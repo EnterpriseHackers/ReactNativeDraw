@@ -26,7 +26,10 @@ export default () => {
     canvasRef.current?.clear();
   };
   const handleSave = () => {
-    canvasRef.current?.undo;
+    canvasRef.current?.getSvg();
+  };
+  const handleLoad = () => {
+    canvasRef.current?.getSvg();
   };
   const handleToggleEraser = () => {
     setTool((prev) =>
@@ -72,6 +75,7 @@ export default () => {
       <View>
         <CanvasControls
           onSave={handleSave}
+          onLoad={handleLoad}
           onUndo={handleUndo}
           onClear={handleClear}
           onToggleEraser={handleToggleEraser}

@@ -4,3 +4,4 @@ export { default as Brush } from './Brush';
 export { default as Undo } from './Undo';
 export { default as Eraser } from './Eraser';
 export { default as Save } from './Save';
+export { default as Load } from './Load';

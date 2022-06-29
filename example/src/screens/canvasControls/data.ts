@@ -35,6 +35,7 @@ const data: Data[] = [
           onToggleEraser: () => {},
           onToggleBrushProperties: () => {},
           onSave: () => {},
+          onLoad: () => {},
           color: '#0A3FA9',
           thickness: 10,
           opacity: 1,
