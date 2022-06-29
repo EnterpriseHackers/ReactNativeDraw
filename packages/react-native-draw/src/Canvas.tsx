@@ -1,35 +1,13 @@
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from 'react';
-import {
-  Animated,
-  Dimensions,
-  ImageBackground,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
-import {
-  Gesture,
-  GestureDetector,
-  GestureHandlerRootView,
-} from 'react-native-gesture-handler';
+import React, {forwardRef, useEffect, useImperativeHandle, useState,} from 'react';
+import {Animated, Dimensions, ImageBackground, StyleProp, StyleSheet, View, ViewStyle,} from 'react-native';
+import {Gesture, GestureDetector, GestureHandlerRootView,} from 'react-native-gesture-handler';
 
-import {
-  DEFAULT_BRUSH_COLOR,
-  DEFAULT_ERASER_SIZE,
-  DEFAULT_OPACITY,
-  DEFAULT_THICKNESS,
-  DEFAULT_TOOL,
-} from './constants';
-import { DrawingTool, PathDataType, PathType } from './types';
-import { createSVGPath } from './utils';
+import {DEFAULT_BRUSH_COLOR, DEFAULT_ERASER_SIZE, DEFAULT_OPACITY, DEFAULT_THICKNESS, DEFAULT_TOOL,} from './constants';
+import {DrawingTool, PathDataType, PathType} from './types';
+import {createSVGPath} from './utils';
 import SVGRenderer from './renderer/SVGRenderer';
 import RendererHelper from './renderer/RendererHelper';
+
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export interface CanvasProps {
@@ -279,7 +257,7 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(
       setPaths([]);
       setPath([]);
     };
-    const getPaths = () => paths;
+    const getPaths = (prev: any) => paths;
 
     const addPath = (newPath: PathType) =>
       setPaths((prev) => [...prev, newPath]);
@@ -291,7 +269,15 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(
         strokeWidth: number,
         strokeOpacity: number
       ) =>
-        `<path d="${d}" stroke="${stroke}" stroke-width="${strokeWidth}" opacity="${strokeOpacity}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+        `<path
+             d="${d}"
+             stroke="${stroke}"
+             stroke-width="${strokeWidth}"
+             opacity="${strokeOpacity}"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             fill="none"
+        />`;
 
       const separatePaths = (p: PathType) =>
         p.path!.reduce(
@@ -425,6 +411,53 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>(
           setPath([]);
         }
       })
+      // .onFinalize(() => {
+      //   if (tool === DrawingTool.Brush) {
+      //     setPaths((prev) => {
+      //       const newSVGPath = generateSVGPath(path, simplifyOptions);
+      //
+      //       if (prev.length === 0) {
+      //         return [
+      //           {
+      //             color,
+      //             path: [newSVGPath],
+      //             data: [path],
+      //             thickness,
+      //             opacity,
+      //             combine: combineWithLatestPath,
+      //           },
+      //         ];
+      //       }
+      //
+      //       const lastPath = prev[prev.length - 1];
+      //
+      //       // Check if the last path has the same properties
+      //       if (
+      //         lastPath.color === color &&
+      //         lastPath.thickness === thickness &&
+      //         lastPath.opacity === opacity
+      //       ) {
+      //         lastPath.path = [...lastPath.path!, newSVGPath];
+      //         lastPath.data = [...lastPath.data, path];
+      //
+      //         return [...prev.slice(0, -1), lastPath];
+      //       }
+      //
+      //       return [
+      //         ...prev,
+      //         {
+      //           color,
+      //           path: [newSVGPath],
+      //           data: [path],
+      //           thickness,
+      //           opacity,
+      //           combine: combineWithLatestPath,
+      //         },
+      //       ];
+      //     });
+      //     setPath([]);
+      //   }
+      // })
       .minPointers(1)
       .minDistance(0)
       .averageTouches(false)
