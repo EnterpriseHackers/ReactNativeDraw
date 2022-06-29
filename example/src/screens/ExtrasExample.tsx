@@ -7,7 +7,6 @@ import {
   DEFAULT_COLORS,
 } from '@benjeau/react-native-draw-extras';
 import { useTheme } from '@react-navigation/native';
-
 export default () => {
   const theme = useTheme();
 
